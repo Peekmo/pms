@@ -253,32 +253,43 @@ def get_input(songs):
 def _play_dl_check(choice, r, songs):
 
     if r['play'].match(choice):
-        songnum = int(r['play'].match(choice).group(1))
+        selection = choice.split(',')
+        values = []
         try:
-            return ("play", songs[songnum - 1])
+            for song in selection:
+                songnum = int(song.strip())
+                values.append(songs[songnum - 1])                
+            return ("play", values)
         except IndexError:
             return ("rangeerror", songnum)
 
     elif r['dl'].match(choice):
-        songnum = int(r['dl'].match(choice).group(1))
+        choice = choice[2:]
+        selection = choice.split(',')
+        values = []
         try:
-            return ("download", songs[songnum - 1])
+            for song in selection:
+                songnum = int(song.strip())
+                values.append(songs[songnum - 1])                
+            return ("download", values)
         except IndexError:
             return ("rangeerror", songnum)
 
 
-def songaction(action, value):
+def songaction(action, values):
 
     r' Plays or downloads the song specified in `value`.  Returns msg on error'
 
     if action == "play":
-        print(generate_song_meta(value))
-        playsong(value)
+        for value in values:
+            print(generate_song_meta(value))
+            playsong(value)
     elif action == "download":
-        download(value)
+        for value in values:
+            download(value)
     elif action == "rangeerror" or action == "nilerror":
-        value = value or "zilch"
-        return("Sorry, %s%s%s is not a valid choice" % (c.g, value, c.w))
+        value = values or "zilch"
+        return("Sorry, %s%s%s is not a valid choice" % (c.g, values, c.w))
 
 
 def song_selection_loop(songs):
@@ -288,9 +299,9 @@ def song_selection_loop(songs):
 
     sactions = "play download rangeerror nilerror".split()
     print(generate_choices(songs))
-    action, value = get_input(songs)
+    action, values = get_input(songs)
     while action in sactions:
-        status = songaction(action, value)
+        status = songaction(action, values)
         print(generate_choices(songs))
         if status:
             print(status)

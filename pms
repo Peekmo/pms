@@ -168,7 +168,7 @@ def playsong(song):
     try:
         cmd = [PLAYER] + PLAYERARGS.split() + [song['track_url']]
         popen = Popen(cmd)
-        popen.wait();
+        popen.wait()
     except OSError:
         print("{}{}{} not found on this system".format(c.y, PLAYER, c.w))
         time.sleep(2)

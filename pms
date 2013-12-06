@@ -30,6 +30,7 @@ import json
 import sys
 import re
 import os
+from subprocess import Popen
 
 # Python 3 compatibility hack
 compat_input = None
@@ -166,10 +167,14 @@ def playsong(song):
         print("\nSorry, this track no longer exists!")
     try:
         cmd = [PLAYER] + PLAYERARGS.split() + [song['track_url']]
-        subprocess.call(cmd)
+        popen = Popen(cmd)
+        popen.wait();
     except OSError:
         print("{}{}{} not found on this system".format(c.y, PLAYER, c.w))
         time.sleep(2)
+    except KeyboardInterrupt:
+        popen.terminate()
+
 
 
 def dosearch(term):

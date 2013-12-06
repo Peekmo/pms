@@ -305,9 +305,9 @@ def song_selection_loop(songs):
         print(generate_choices(songs))
         if status:
             print(status)
-        action, value = get_input(songs)
+        action, values = get_input(songs)
     if action == "search":
-        start(value)
+        start(values)
 
 
 def start(args, cmdline=None):

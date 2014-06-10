@@ -147,3 +147,5 @@ Download [zip](https://github.com/np1/pms/archive/master.zip)/[tar.gz](https://g
 
     [1-20] to play or [d 1-20] to download or [q]uit or enter new search
      > 
+
+__You can type "all" to download or listen the 20 songs printed__
